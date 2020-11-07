@@ -15,7 +15,7 @@ constructor(props) {
 
 render() {
     const {collections} = this.state;
-    return(<div classNane = 'shop-page'>
+    return(<div className='shop-page'>
  {
      collections.map(({id, ...otherCollectionProps})=>(
          <PreviewCollection key={id} {...otherCollectionProps}/>
