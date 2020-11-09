@@ -1,25 +1,29 @@
 .cart-dropdown {
-    position: absolute;
-    width: 240px;
-    height: 380px;
+  position: absolute;
+  width: 240px;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: white;
+  top: 80px;
+  right: 10px;
+  z-index: 5;
+
+  .empty-message {
+    font: size 14px;
+    margin: 50% auto;
+  }
+
+  .cart-items {
+    height: 340px;
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    border: 1px solid black;
-    background-color: white;
-    top: 80px;
-    right: 10px;
-    z-index: 5;
-  
-    .cart-items {
-      height: 340px;
-      display: flex;
-      flex-direction: column;
-      overflow: scroll;
-    }
-  
-    button {
-      margin-top: auto;
-    }
+    overflow: scroll;
   }
-  
+
+  button {
+    margin-top: auto;
+  }
+}
