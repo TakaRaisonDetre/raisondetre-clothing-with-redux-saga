@@ -6,13 +6,7 @@ import 'firebase/auth';
 
 
 const config = {
-  apiKey: "AIzaSyDbnKZOT-udmX8P4RxXsXt7jQWIhmKZlEc",
-  authDomain: "react-shop-60c32.firebaseapp.com",
-  databaseURL: "https://react-shop-60c32.firebaseio.com",
-  projectId: "react-shop-60c32",
-  storageBucket: "react-shop-60c32.appspot.com",
-  messagingSenderId: "401318346595",
-  appId: "1:401318346595:web:e7744c45b82e5507a0dd56"
+  
   };
 
 export const createUserProfileDocument = async (userAuth, AdditionalData) =>{
