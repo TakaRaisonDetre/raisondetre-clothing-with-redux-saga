@@ -6,7 +6,13 @@ import 'firebase/auth';
 
 
 const config = {
-  
+  apiKey: "AIzaSyDbnKZOT-udmX8P4RxXsXt7jQWIhmKZlEc",
+  authDomain: "react-shop-60c32.firebaseapp.com",
+  databaseURL: "https://react-shop-60c32.firebaseio.com",
+  projectId: "react-shop-60c32",
+  storageBucket: "react-shop-60c32.appspot.com",
+  messagingSenderId: "401318346595",
+  appId: "1:401318346595:web:e7744c45b82e5507a0dd56"
   };
 
 export const createUserProfileDocument = async (userAuth, AdditionalData) =>{
@@ -33,6 +39,42 @@ if(!snapShot.exists){
 }
 return userRef;
 }
+
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) =>{
+  const collectionRef = firestore.collection(collectionKey);
+  console.log(collectionRef);
+
+  const batch = firestore.batch();
+  objectsToAdd.forEach(obj =>{
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+   
+  });
+
+  return await batch.commit()
+
+}
+
+export const convertCollectionsSnapshotToMap = (collections) =>{
+const transformedCollection = collections.docs.map(
+  doc => {
+    const {title, items} = doc.data();
+    return {
+      routeName : encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    }
+  });
+  console.log(transformedCollection)
+  
+  return transformedCollection.reduce((accumulator, collection)=>{
+      accumulator[collection.title.toLowerCase()] = collection;
+      return accumulator;
+  },{})
+}
+
 
 
   firebase.initializeApp(config);
