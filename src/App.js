@@ -51,11 +51,10 @@ class App extends React.Component {
               id : snapShot.id,
               ...snapShot.data()
           
+             });
           });
-    });
-  }
-setCurrentUser(userAuth);
-
+         }
+         setCurrentUser(userAuth);
     });
   }
 
