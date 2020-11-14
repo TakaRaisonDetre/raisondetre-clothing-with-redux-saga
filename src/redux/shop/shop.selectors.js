@@ -22,13 +22,25 @@ export const selectCollections = createSelector(
 //         collection.id === COLLECTION_ID_MAP[collectionUrlParam])
 //   )
 
+
+export const selectCollectionForPreview = createSelector(
+    [selectCollections],
+    collections => collections ? Object.keys(collections).map(key=> collections[key]) : []
+)
+
+
 export const selectCollection = collectionUrlParam =>  
 createSelector(
    [selectCollections],
     collections=> (collections? collections[collectionUrlParam] :null)
 );
 
-export const selectCollectionForPreview = createSelector(
-    [selectCollections],
-    collections => collections ? Object.keys(collections).map(key=> collections[key]) : []
+export const selectIsCollectionFetching = createSelector(
+    [selectShop],
+    shop => shop.fetching
+);
+
+export const selectIsCollectionsLoaded  = createSelector(
+    [selectShop],
+    shop => !! shop.collections // check boolean
 )

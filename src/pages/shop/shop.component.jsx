@@ -1,36 +1,36 @@
 import React from 'react';
 import {Route} from 'react-router-dom'
 import {connect } from 'react-redux'
-import {firestore, convertCollectionsSnapshotToMap} from '../../firebase/firebase.utils'
 
-import {undateCollections} from '../../redux/shop/shop.actions';
+import {fetchCollectionsStartAsync} from '../../redux/shop/shop.actions';
 
-import WithSpinner from '../../components/with-spinner/with-spinner.component'
 import CollectionsOverview from '../../components/collections-overview/collection-overview.component'
-import CollectionPage from '../collection/collection.component'
+import CollectionPageContainer from '../collection/collection.container.component'
 
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
-const CollectionPageWithSpinner = WithSpinner(CollectionPage);
+import CollectionsOverviewContainer from '../../components/collections-overview/collection-overview.container'
+//const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
+//const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
 class  ShopPage extends React.Component {
 
-state={
-      loading: true   
-      };
+// state={
+//       loading: true   
+//       };
  
  unsubscribeFromSnapshot = null;
 
  componentDidMount () {
-
-   const {updateCollection} = this.props;
-   const collectionRef = firestore.collection('collections')
+   const {fetchCollectionsStartAsync} = this.props;
+   fetchCollectionsStartAsync();
+   // The below goes to action 
+   // const collectionRef = firestore.collection('collections')
    
-   // promise base
-   collectionRef.get().then(snapshot=>{
-      const collectionsMap =convertCollectionsSnapshotToMap(snapshot);
-      updateCollection(collectionsMap);
-      this.setState({loading:false});
-   })
+   // // promise base
+   // collectionRef.get().then(snapshot=>{
+   //    const collectionsMap =convertCollectionsSnapshotToMap(snapshot);
+   //    updateCollection(collectionsMap);
+   //    this.setState({loading:false});
+   // })
 
    // observable base 
 //   this.unsubscribeFromSnapshot= collectionRef.onSnapshot(async snapshot =>{
@@ -43,31 +43,29 @@ state={
  
     render(){
 
-     const {match} = this.props; 
-     const {loading} = this.state;
+     const {match, isCollectionsLoaded} = this.props; 
+     
   return(
         <div className='shop-page'>
          {/* < Route exact path = {`${match.path}`} component={CollectionsOverview} /> */}
          < Route exact 
          path = {`${match.path}`} 
-         render={props=> ( 
-         <CollectionsOverviewWithSpinner isloading={loading} {...props} /> )}
-         />
+         component = {CollectionsOverviewContainer}/>
        
          {/* < Route path ={`${match.path}/:collectionId`} component={CollectionPage}/> */}
          < Route 
          path ={`${match.path}/:collectionId`} 
-         render={props=> ( 
-         <CollectionPageWithSpinner isloading={loading} {...props}/> )} 
-         />
+         component={CollectionPageContainer}/>
          </div>
          );
  }
 }
 
 
+
+
 const mapDispatchToProps = dispatch => ({
-    updateCollection : collectionsMap => dispatch(undateCollections(collectionsMap))
+ fetchCollectionsStartAsync : () => dispatch(fetchCollectionsStartAsync())
 })
 
 
