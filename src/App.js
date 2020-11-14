@@ -13,8 +13,8 @@ import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/signin-signup/signin-signup.component';
 import CheckoutPage from './pages/checkout/checkout.component'
 
-import {setCurrentUser} from './redux/user/user.action'
 
+import {checkUserSession} from './redux/user/user.action'
 
 
 
@@ -24,24 +24,10 @@ class App extends React.Component {
 
 
   componentDidMount(){
-
+    const { checkUserSession} = this.props;
+    checkUserSession();
   
 
-    // this.unsubscribeFromAuth= auth.onAuthStateChanged(async userAuth => {
-    //  if(userAuth){
-    //    const userRef = await createUserProfileDocument(userAuth);
-       
-    //    userRef.onSnapshot(snapShot=>{
-         
-    //       setCurrentUser({
-    //           id : snapShot.id,
-    //           ...snapShot.data()
-          
-    //          });
-    //       });
-    //      }
-    //      setCurrentUser(userAuth);
-    // });
   }
 
 
@@ -69,11 +55,17 @@ class App extends React.Component {
 }
 
 
+
+
 const mapStateToProps = createStructuredSelector({
   currentUser : selectCurrentUser,
  
 })
 
 
+const mapDispatchToProps = dispatch=>({
+  checkUserSession: () => dispatch(checkUserSession())
+})
 
-export default connect(mapStateToProps)(App);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
